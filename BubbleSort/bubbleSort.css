@@ -1,0 +1,16 @@
+.bubble {
+  background-color: lightblue;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  color: darkblue;
+  text-align: center;
+  width: 100%;
+}
+
+
+.container-bubble-sort {
+  display: flex;
+  justify-content: space-evenly;
+}

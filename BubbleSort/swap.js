@@ -12,4 +12,4 @@ const swap = (arr, indexOne, indexTwo) => {
   arr[indexOne] = temp;
 };
 
-module.exports = swap;
+export default swap;
