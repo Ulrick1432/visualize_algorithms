@@ -1,5 +1,3 @@
-import swap from './swap.js';
-
 const arrOne = [9, 8, 7, 6, 5, 4, 3, 2, 1]; // = O(n^2) runtime
 
 /**
@@ -76,6 +74,20 @@ const bubbleSort = (input) => {
   }
   console.log(`Swapped ${swapCount} times`);
   return input;
+};
+
+/**
+ * Swaps the elements at the specified indices in an array.
+ *
+ * @param {Array} arr - The array containing elements to be swapped.
+ * @param {number} indexOne - The index of the first element to swap.
+ * @param {number} indexTwo - The index of the second element to swap.
+ */
+
+const swap = (arr, indexOne, indexTwo) => {
+  const temp = arr[indexTwo];
+  arr[indexTwo] = arr[indexOne];
+  arr[indexOne] = temp;
 };
 
 //const arrTwo = [1, 2, 3, 4, 5, 6, 7, 8, 9]; // = O(n) runtime
