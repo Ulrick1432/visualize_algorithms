@@ -7,8 +7,8 @@
   color: darkblue;
   text-align: center;
   width: 100%;
+  transition: transform 0.5s;
 }
-
 
 .container-bubble-sort {
   display: flex;
