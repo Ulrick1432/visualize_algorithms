@@ -2,6 +2,17 @@
   text-align: center;
 }
 
+#arraySize {
+  width: 10vh;
+  -moz-appearance: textfield; /* Firefox */
+}
+
+#arraySize::-webkit-outer-spin-button,
+#arraySize::-webkit-inner-spin-button {
+  -webkit-appearance: none; /* Chrome, Safari, Edge */
+  margin: 0;
+}
+
 .bubble {
   background-color: lightblue;
   padding: 10px;

@@ -157,6 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
           notComplete = true;
         } else {
           statusHeader.innerHTML = 'OK';
+          await delay(300);
         }
 
         // Reset colors after comparison
