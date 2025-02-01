@@ -18,7 +18,7 @@ function addElement(content) {
   const newContent = document.createTextNode(content);
   newDiv.appendChild(newContent);
 
-  const parentContainer = document.querySelector(".container-bubble-sort");
+  const parentContainer = document.querySelector(".bubble-sort");
   newDiv.classList.add("bubble", `bubble-value-${content}`);
 
   parentContainer.appendChild(newDiv);
@@ -43,6 +43,8 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const bubbleSort = async (arr) => {
   let notComplete = true;
   let swapCount = 0;
+  
+  const statusHeader = document.querySelector('.status');
 
   await delay(100); // Allow time for initial rendering
 
@@ -73,6 +75,7 @@ const bubbleSort = async (arr) => {
 
       if (arr[i] > arr[i + 1]) {
         // Swap in the array
+        statusHeader.innerHTML = 'Swap';
         [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
         // Change colors to indicate a swap is happening
         bubble1.style.backgroundColor = "green";
@@ -101,7 +104,7 @@ const bubbleSort = async (arr) => {
 
         // Removes old nodes
         bubbles.forEach(node => {
-          const parentContainer = document.querySelector(".container-bubble-sort");
+          const parentContainer = document.querySelector(".bubble-sort");
           parentContainer.removeChild(node);
         });
         
@@ -114,6 +117,8 @@ const bubbleSort = async (arr) => {
 
         // Indicate that sorting is not complete
         notComplete = true;
+      } else {
+        statusHeader.innerHTML = 'OK';
       }
 
       // Reset colors after comparison
@@ -122,10 +127,11 @@ const bubbleSort = async (arr) => {
 
       // Add a short delay to ensure the reset is visible
       await delay(300);
-    }
+    } 
   }
 
   console.log(`Sorting completed with ${swapCount} swaps.`);
+  statusHeader.innerHTML = 'DONE!';
   return arr;
 };
 
