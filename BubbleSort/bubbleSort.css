@@ -4,7 +4,6 @@
 
 #arraySize {
   width: 10vh;
-  -moz-appearance: textfield; /* Firefox */
 }
 
 #arraySize::-webkit-outer-spin-button,
