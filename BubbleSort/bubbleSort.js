@@ -54,6 +54,14 @@ const bubbleSort = async (arr) => {
       const bubble1 = bubbles[i];
       const bubble2 = bubbles[i + 1];
 
+      // Get the size and position of the 2 bubbles
+      const bubbleRect1 = bubble1.getBoundingClientRect();
+      const bubbleRect2 = bubble2.getBoundingClientRect();
+      const bubbleWidth1 = bubbleRect1.width + 10;
+      const bubbleWidth2 = bubbleRect2.width + 10;
+
+      console.log(`bubbleWidth1 = ${bubbleWidth1}`);
+
       // Highlight the bubbles being compared
       bubble1.style.backgroundColor = "red";
       bubble2.style.backgroundColor = "red";
@@ -70,17 +78,22 @@ const bubbleSort = async (arr) => {
         bubble1.style.backgroundColor = "green";
         bubble2.style.backgroundColor = "green";
 
-        // Animate swapping in the DOM
-        bubble1.style.transform = `scale(1.2) translate(40px, -20px)`; // Move right + bounce up
-        bubble2.style.transform = `scale(1.2) translate(-40px, 20px)`; // Move left + bounce down
+        // Animate moving right or left
+        bubble1.style.transform = `translateY(-3vh)`; // Move up
+        bubble2.style.transform = `translateY(3vh)`; // Move down
 
-        await delay(2000); // Wait for animation to complete
+        await delay(1500); // Wait for move animation to complete
+
+        // Animate bouncing up or down
+        bubble1.style.transform = `translate(${bubbleWidth1}px, -3vh)`; // Move right
+        bubble2.style.transform = `translate(-${bubbleWidth2}px, 3vh)`; // Move left
+        await delay(500); // Wait for bounce animation to complete
 
         // Settle the bubbles back into position
-        bubble1.style.transform = `translate(260px, 0px)`;
-        bubble2.style.transform = `translate(-260px, 0px)`;
+        bubble1.style.transform = `translate(${bubbleWidth1}px, 0vh)`;
+        bubble2.style.transform = `translate(-${bubbleWidth2}px, 0vh)`;
 
-        await delay(2000); // Wait for animation to complete
+        await delay(500); // Wait for settle animation to complete
 
         // Reset transform styles
         bubble1.style.removeProperty('transform');
@@ -90,13 +103,12 @@ const bubbleSort = async (arr) => {
         bubbles.forEach(node => {
           const parentContainer = document.querySelector(".container-bubble-sort");
           parentContainer.removeChild(node);
-
         });
         
         // Insert new nodes (updated order)
         arr.forEach(value => {
           addElement(value);
-        })
+        });
 
         swapCount++;
 
