@@ -1,0 +1,38 @@
+.header {
+  text-align: center;
+}
+
+#arraySize {
+  width: 10vh;
+}
+
+#arraySize::-webkit-outer-spin-button,
+#arraySize::-webkit-inner-spin-button {
+  -webkit-appearance: none; /* Chrome, Safari, Edge */
+  margin: 0;
+}
+
+.element {
+  background-color: lightblue;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  color: darkblue;
+  text-align: center;
+  width: 100%;
+  transition: transform 0.5s;
+}
+
+.container-quick-sort {
+  text-align: center;
+}
+
+.status {
+  padding-bottom: 2vh;
+}
+
+.quick-sort {
+  display: flex;
+  justify-content: space-evenly;
+}
