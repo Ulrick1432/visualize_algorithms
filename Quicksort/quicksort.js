@@ -1,5 +1,11 @@
 const swap = require('./swap');
 
+const swap = (arr, indexOne, indexTwo) => {
+  const temp = arr[indexTwo];
+  arr[indexTwo] = arr[indexOne];
+  arr[indexOne] = temp;
+}
+
 const quicksort = (array, leftBound = 0, rightBound = array.length - 1) => {
   if (leftBound < rightBound) {
     const pivotIndex = partition(array, leftBound, rightBound);
