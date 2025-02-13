@@ -1,4 +1,4 @@
-import { elements } from "./quickSortElements.js"; 
+let arr = [4, 2, 1, 3, 0, 6, 7];
 
 /**
  * Performs the QuickSort algorithm on the given array.
@@ -12,10 +12,7 @@ import { elements } from "./quickSortElements.js";
  * @param {number} low - The starting index of the array segment to be sorted.
  * @param {number} high - The ending index of the array segment to be sorted.
  */
-const quickSort = async (arr, low, high) => {
-  // Add element tree to the DOM
-  await elements.addElementTree(arr);
-
+const quickSort = (arr, low, high) => {
   if (low < high) {
     // Find random Pivot
     let pivotIndex = Math.floor(Math.random() * (high - low + 1)) + low;
@@ -41,7 +38,7 @@ const swapWithLastIndex = (arr, pivotIndex, lastIndex) => {
   const temp = arr[lastIndex];
   arr[lastIndex] = arr[pivotIndex];
   arr[pivotIndex] = temp;
-  return arr;                    
+  return arr;
 }
 
 /**
@@ -84,48 +81,5 @@ const swapArr = (arr, i, j) => {
   return arr;
 };
 
-const generateArray = (size) => {
-  const arr = [];
-  for (let i = 0; i < size; i++) {
-    arr.push(i);
-  }
-  return shuffleArray(arr);
-};
-
-// Function to shuffle the array
-const shuffleArray = (arr) => {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-};
-
-const startQuickSort = async () => {
-  // input is used to defined the index quantity
-  const input = document.getElementById("arraySize");
-  const inputValue = input.value;
-  if (isNaN(inputValue)) {
-    alert("Please enter a valid number.");
-    return;
-  }
-  const size = parseInt(inputValue);
-  let arr = await generateArray(size);
-  console.log(`array size = ${size} And the array is = ${arr}`);
-
-  if (size >= 2 && size <= 10) {
-    // quicksort
-    arr = await quickSort(arr);
-  } else {
-    alert("Please enter a number between 2 and 10.");
-  }
-  console.log(`DONE! and the arr is now = ${arr}`);
-};
-
-
-document.getElementById("start-sorting").addEventListener("click", startQuickSort);
-
-// For test ↓ 
-// let arr = [4, 2, 1, 3, 0, 6, 7];
-// quickSort(arr, 0, arr.length - 1);
-// console.log("Sorted array:", arr);
+quickSort(arr, 0, arr.length - 1);
+console.log("Sorted array:", arr);

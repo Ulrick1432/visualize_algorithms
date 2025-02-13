@@ -1,3 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 .header {
   text-align: center;
 }
@@ -24,15 +29,31 @@
   transition: transform 0.5s;
 }
 
+.temp {
+  background-color: lightblue;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  color: darkblue;
+  text-align: center;
+}
+
 .container-quick-sort {
   text-align: center;
+}
+
+.quick-sort-tree {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Center children horizontally */
 }
 
 .status {
   padding-bottom: 2vh;
 }
 
-.quick-sort {
+.node-container {
   display: flex;
   justify-content: space-evenly;
+  width: 100%;
 }
