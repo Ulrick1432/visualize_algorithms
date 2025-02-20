@@ -43,6 +43,27 @@ const elements = {
         console.error("Element with class 'element-value-0' not found.");
       }
     },
+
+  addElement: (value) => {
+    const container = document.querySelector(".node-container");
+    const node = document.createElement("div");
+    node.classList.add("element", `element-value-${value}`);
+    node.textContent = value;
+    container.appendChild(node);
+  },
+
+  removeNodes: (nodeArr) => {
+    nodeArr.forEach(node => {
+      const parentContainer = document.querySelector(".node-container");
+      parentContainer.removeChild(node);
+    });
+  },
+
+  insertNodes: (indexArr) => {
+    indexArr.forEach(value => {
+      elements.addElement(value);
+    });
+  },
   
   // Delay function
   delay: (ms) => new Promise((resolve) => setTimeout(resolve, ms)),

@@ -1,5 +1,7 @@
 import { elements } from "./quickSortElements.js"; 
 
+let countQuickSortCalls = 0;
+
 /**
  * Performs the QuickSort algorithm on the given array.
  * 
@@ -13,35 +15,67 @@ import { elements } from "./quickSortElements.js";
  * @param {number} high - The ending index of the array segment to be sorted.
  */
 const quickSort = async (arr, low, high) => {
-  // Add element tree to the DOM
-  await elements.addElementTree(arr);
-
+  countQuickSortCalls++;
   if (low < high) {
     // Find random Pivot
     let pivotIndex = Math.floor(Math.random() * (high - low + 1)) + low;
-    arr = swapWithLastIndex(arr, pivotIndex, high);
-    
+    let pivotValue = arr[pivotIndex];
+    // Add elements 
+    if (countQuickSortCalls === 1) { // add ElementTree for original array
+      console.log(`pivot for the origin arr is = ${arr[pivotIndex]}`);
+      elements.addElementTree(arr);
+      const pivotElement = document.querySelector(`.element-value-${pivotValue}`);
+      pivotElement.textContent = `${pivotElement.textContent} Pivot`
+      await elements.delay(2000);
+    } else {
+      console.log(`Sub array found at call count ${countQuickSortCalls}`);
+      console.log(`arr = ${arr} low = ${low} high = ${high}`);
+      elements.addElementTree(arr.slice(low, high));
+    }
+    // Swap pivot with the last index if it's not already the last one
+    if (pivotIndex !== arr.length - 1) {
+      console.log(`Swapping pivot with the last index of the array`);
+      arr = swapArr(arr, pivotIndex, high);
+      await swapVisually(pivotIndex, high);
+      // update arr visually
+      let nodeArr = document.querySelectorAll('.element');
+      elements.removeNodes(nodeArr);
+      elements.insertNodes(arr);
+    } else {
+      console.log(`pivot is already at the last index of the array`);
+    }
+
     pivotIndex = partition(arr, low, high);
 
-    // Recursive calls.
-    quickSort(arr, low, pivotIndex - 1);
-    quickSort(arr, pivotIndex + 1, high);
+    // Recursive calls
+    // await quickSort(arr, low, pivotIndex - 1);
+    // await quickSort(arr, pivotIndex + 1, high);
   }
-}
+};
 
-/**
- * Swaps the element at the specified pivot index with the last element in the array.
- *
- * @param {Array} arr - The array in which the swap operation is performed.
- * @param {number} pivotIndex - The index of the pivot element to be swapped with the last element.
- * @param {number} lastIndex - The index of the last element in the array.
- * @returns {Array} The modified array after the swap operation.
- */
-const swapWithLastIndex = (arr, pivotIndex, lastIndex) => {
-  const temp = arr[lastIndex];
-  arr[lastIndex] = arr[pivotIndex];
-  arr[pivotIndex] = temp;
-  return arr;                    
+// Swap places with two elements (element Two will first go the the temp)
+const swapVisually = async (elementOneIndex, elementTwoIndex) => {
+  const arrElements = document.querySelectorAll('.element');
+  
+  // Defined temp element
+  const tempElement = document.querySelector('.temp');
+  const tempElementRect = tempElement.getBoundingClientRect();
+
+  // Defined last index element
+  const elementTwo = arrElements[elementTwoIndex];
+  const elementTwoRect = elementTwo.getBoundingClientRect();
+
+  // Defined pivot element
+  const elementOne = arrElements[elementOneIndex];
+  const elementOneRect = elementOne.getBoundingClientRect();
+
+  // Switch places
+  elementTwo.style.transform = `translate(${tempElementRect.x - elementTwoRect.x}px, ${tempElementRect.y - elementTwoRect.y}px)`;
+  await elements.delay(1500);
+  elementOne.style.transform = `translate(${elementTwoRect.x - elementOneRect.x}px, ${elementTwoRect.y - elementOneRect.y}px)`;
+  await elements.delay(1500);
+  elementTwo.style.transform = `translate(${elementOneRect.x - elementTwoRect.x}px, ${elementOneRect.y - elementTwoRect.y}px)`;
+  await elements.delay(1500);
 }
 
 /**
@@ -55,6 +89,12 @@ const swapWithLastIndex = (arr, pivotIndex, lastIndex) => {
  * @returns {number} The index of the pivot element after partitioning.
  */
 const partition = (arr, low, high) => {
+  if (high < arr.length - 1) {
+    console.log(`This is the low sub array = ${arr.slice(low, high)}`);
+  } else {
+    console.log(`This is the high sub array = ${arr.slice(low, high)}`);
+  };
+
   let pivot = arr[high];
   let smallerElementIndex = low - 1;
 
@@ -62,10 +102,12 @@ const partition = (arr, low, high) => {
     if (arr[currentIndex] < pivot) {
       smallerElementIndex++;
       arr = swapArr(arr, currentIndex, smallerElementIndex);
+      swapVisually(currentIndex, smallerElementIndex);
     }
   }
 
   arr = swapArr(arr, high, smallerElementIndex + 1);
+  console.log(`This is the array in the end of the partition function = ${arr}`);
   return smallerElementIndex + 1;
 }
 
@@ -78,9 +120,11 @@ const partition = (arr, low, high) => {
  * @returns {Array} - The array after the elements have been swapped.
  */
 const swapArr = (arr, i, j) => {
+  console.log(`Swapping values = ${arr[i]} with ${arr[j]}`);
   const temp = arr[j];
   arr[j] = arr[i];
   arr[i] = temp;
+  console.log(`After swap function the array is now = ${arr}`);
   return arr;
 };
 
@@ -115,11 +159,11 @@ const startQuickSort = async () => {
 
   if (size >= 2 && size <= 10) {
     // quicksort
-    arr = await quickSort(arr);
+    await quickSort(arr, 0, arr.length - 1);
   } else {
     alert("Please enter a number between 2 and 10.");
   }
-  console.log(`DONE! and the arr is now = ${arr}`);
+  //console.log(`DONE! and the arr is now = ${arr}`);
 };
 
 
