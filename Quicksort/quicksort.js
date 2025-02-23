@@ -16,6 +16,7 @@ let countQuickSortCalls = 0;
  */
 const quickSort = async (arr, low, high) => {
   countQuickSortCalls++;
+  console.log(`${countQuickSortCalls}.Running quickSort`)
   if (low < high) {
     // Find random Pivot
     let pivotIndex = Math.floor(Math.random() * (high - low + 1)) + low;
@@ -40,16 +41,17 @@ const quickSort = async (arr, low, high) => {
       // update arr visually
       let nodeArr = document.querySelectorAll('.element');
       elements.removeNodes(nodeArr);
-      elements.insertNodes(arr);
+      elements.insertNodes(arr, pivotValue);
     } else {
       console.log(`pivot is already at the last index of the array`);
     }
 
     pivotIndex = partition(arr, low, high);
 
+    console.log(`Ending quickSortCall ${countQuickSortCalls}`);
     // Recursive calls
-    // await quickSort(arr, low, pivotIndex - 1);
-    // await quickSort(arr, pivotIndex + 1, high);
+    await quickSort(arr, low, pivotIndex - 1);
+    await quickSort(arr, pivotIndex + 1, high);
   }
 };
 
@@ -88,7 +90,7 @@ const swapVisually = async (elementOneIndex, elementTwoIndex) => {
  * @param {number} high - The ending index of the array segment to be partitioned.
  * @returns {number} The index of the pivot element after partitioning.
  */
-const partition = (arr, low, high) => {
+const partition = async (arr, low, high) => {
   if (high < arr.length - 1) {
     console.log(`This is the low sub array = ${arr.slice(low, high)}`);
   } else {
@@ -98,15 +100,24 @@ const partition = (arr, low, high) => {
   let pivot = arr[high];
   let smallerElementIndex = low - 1;
 
+  // While currentIndex is less or equal to high AKA last index in the array "Sliced arr"
   for (let currentIndex = low; currentIndex <= high - 1; currentIndex++) {
     if (arr[currentIndex] < pivot) {
+      console.log(`${arr[currentIndex]} is less than Pivot ${pivot} and will swap places`);
       smallerElementIndex++;
       arr = swapArr(arr, currentIndex, smallerElementIndex);
-      swapVisually(currentIndex, smallerElementIndex);
+
+      // Changes the visual
+      await swapVisually(currentIndex, smallerElementIndex);
+      elements.removeNodes(document.querySelectorAll('.element'));
+      elements.insertNodes(arr, pivot);
     }
   }
 
   arr = swapArr(arr, high, smallerElementIndex + 1);
+  await swapVisually(high, smallerElementIndex + 1);
+  elements.removeNodes(document.querySelectorAll('.element'));
+  elements.insertNodes(arr, pivot);
   console.log(`This is the array in the end of the partition function = ${arr}`);
   return smallerElementIndex + 1;
 }

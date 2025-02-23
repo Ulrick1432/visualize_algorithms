@@ -44,24 +44,34 @@ const elements = {
       }
     },
 
-  addElement: (value) => {
+  addElement: (value, pivot = null) => {
     const container = document.querySelector(".node-container");
     const node = document.createElement("div");
     node.classList.add("element", `element-value-${value}`);
-    node.textContent = value;
+    if (pivot === value) {
+      node.textContent = `${value} Pivot`;
+    } else {
+      node.textContent = value;
+    }
     container.appendChild(node);
   },
 
   removeNodes: (nodeArr) => {
+    console.log(`Removing Nodes`);
     nodeArr.forEach(node => {
       const parentContainer = document.querySelector(".node-container");
       parentContainer.removeChild(node);
     });
   },
 
-  insertNodes: (indexArr) => {
+  insertNodes: (indexArr, pivotValue) => {
+    console.log(`Inserting nodes = ${indexArr}`);
     indexArr.forEach(value => {
-      elements.addElement(value);
+      if (pivotValue === value) {
+        elements.addElement(value, pivotValue);
+      } else {
+        elements.addElement(value);
+      }
     });
   },
   
