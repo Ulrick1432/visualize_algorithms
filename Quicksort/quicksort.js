@@ -19,8 +19,8 @@ const quickSort = async (arr, low, high) => {
   console.log(`${countQuickSortCalls}.Running quickSort`)
   if (low < high) {
     // Find random Pivot
-    //let pivotIndex = Math.floor(Math.random() * (high - low + 1)) + low;
-    let pivotIndex = 0;
+    //let pivotIndex = Math.floor(Math.random() * (high - low + 1)) + low; UNCOMMENT WHEN NOT TESTING
+    let pivotIndex = 0; // REMOVE WHEN NOT TESTING
     let pivotValue = arr[pivotIndex];
     // Add elements 
     if (countQuickSortCalls === 1) { // add ElementTree for original array
@@ -51,8 +51,8 @@ const quickSort = async (arr, low, high) => {
 
     console.log(`Ending quickSortCall ${countQuickSortCalls}`);
     // Recursive calls
-    //await quickSort(arr, low, pivotIndex - 1);
-    //await quickSort(arr, pivotIndex + 1, high);
+    //await quickSort(arr, low, pivotIndex - 1); REMOVE WHEN NOT TESTING
+    //await quickSort(arr, pivotIndex + 1, high); REMOVE WHEN NOT TESTING
   } else {
     console.log(`${low} is not less than ${high}`);
   }
