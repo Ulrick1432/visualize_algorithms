@@ -19,7 +19,8 @@ const quickSort = async (arr, low, high) => {
   console.log(`${countQuickSortCalls}.Running quickSort`)
   if (low < high) {
     // Find random Pivot
-    let pivotIndex = Math.floor(Math.random() * (high - low + 1)) + low;
+    //let pivotIndex = Math.floor(Math.random() * (high - low + 1)) + low;
+    let pivotIndex = 0;
     let pivotValue = arr[pivotIndex];
     // Add elements 
     if (countQuickSortCalls === 1) { // add ElementTree for original array
@@ -31,7 +32,7 @@ const quickSort = async (arr, low, high) => {
     } else {
       console.log(`Sub array found at call count ${countQuickSortCalls}`);
       console.log(`arr = ${arr} low = ${low} high = ${high}`);
-      elements.addElementTree(arr.slice(low, high));
+      await elements.addElementTree(arr.slice(low, high));
     }
     // Swap pivot with the last index if it's not already the last one
     if (pivotIndex !== arr.length - 1) {
@@ -46,12 +47,14 @@ const quickSort = async (arr, low, high) => {
       console.log(`pivot is already at the last index of the array`);
     }
 
-    pivotIndex = partition(arr, low, high);
+    pivotIndex = await partition(arr, low, high);
 
     console.log(`Ending quickSortCall ${countQuickSortCalls}`);
     // Recursive calls
-    await quickSort(arr, low, pivotIndex - 1);
-    await quickSort(arr, pivotIndex + 1, high);
+    //await quickSort(arr, low, pivotIndex - 1);
+    //await quickSort(arr, pivotIndex + 1, high);
+  } else {
+    console.log(`${low} is not less than ${high}`);
   }
 };
 
@@ -101,9 +104,26 @@ const partition = async (arr, low, high) => {
   let smallerElementIndex = low - 1;
 
   // While currentIndex is less or equal to high AKA last index in the array "Sliced arr"
+  let countLoop = 0;
   for (let currentIndex = low; currentIndex <= high - 1; currentIndex++) {
+    // Visualize what is compared
+    let nodeElements = document.querySelectorAll('.element');
+    let tempElementOne = nodeElements[currentIndex].textContent;
+    let elementOne = nodeElements[currentIndex];
+    elementOne.textContent = `${elementOne.textContent} I`;
+
+    let tempElementTwo = null;
+    let elementTwo = null;
+    if (smallerElementIndex > -1) {
+      console.log(`smallerElementIndex > -1 then countLoop > 0 ? ${countLoop > 0}`);
+      tempElementTwo = nodeElements[smallerElementIndex].textContent;
+      elementTwo = nodeElements[smallerElementIndex];
+      countLoop > 0 ? elementTwo.textContent = `${elementTwo.textContent} J`: null;
+    }
+    // switch if currentIndex value is les than the Pivot value.
     if (arr[currentIndex] < pivot) {
       console.log(`${arr[currentIndex]} is less than Pivot ${pivot} and will swap places`);
+      console.log(`currentIndex = ${currentIndex} & smallerElementIndex = ${smallerElementIndex}`);
       smallerElementIndex++;
       arr = swapArr(arr, currentIndex, smallerElementIndex);
 
@@ -111,7 +131,14 @@ const partition = async (arr, low, high) => {
       await swapVisually(currentIndex, smallerElementIndex);
       elements.removeNodes(document.querySelectorAll('.element'));
       elements.insertNodes(arr, pivot);
+    } else {
+      console.log(`currentIndex = ${currentIndex} & smallerElementIndex = ${smallerElementIndex}`);
     }
+    // Reset content of the comapred elements (remove I & J)
+    elementOne.textContent = tempElementOne;
+    countLoop > 0 ? elementTwo.textContent = tempElementTwo : null;
+
+    countLoop++
   }
 
   arr = swapArr(arr, high, smallerElementIndex + 1);
