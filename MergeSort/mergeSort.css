@@ -53,14 +53,6 @@ input#arraySize::-webkit-inner-spin-button {
 }
 
 
-.element-merge-subparent {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 60px;
-  position: relative;
-}
-
 .element-split-subparent-child {
   display: flex;
 }
@@ -82,4 +74,22 @@ input#arraySize::-webkit-inner-spin-button {
   flex-direction: column;
   align-items: center;
   gap: 40px;
+}
+
+
+.merge-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.merge-node-values {
+  display: flex;
+  gap: 8px;
+}
+
+.merge-node-children {
+  display: flex;
+  gap: 60px;
 }

@@ -6,6 +6,7 @@ const startMergeSort = async () => {
   console.log("Start Merge Sort");
   const input = document.getElementById("arraySize");
   const size = parseInt(input.value); 
+
   if (size >= 2 && size <= 10) {
     const arr = helperFuncs.shuffleArray(helperFuncs.generateArray(size));
     // Clear existing elements
@@ -30,20 +31,31 @@ const startMergeSort = async () => {
   }
 };
 
+let countLoops = 0;
 const visualizeDivide = (array, container) => {
+  // Create ONE node
+  const node = mergeSort.addDivElement(container, ["merge-node"]);
+
+  // Render current array
+  const valuesRow = mergeSort.addDivElement(node, ["merge-node-values"]);
+  array.forEach(v => mergeSort.addMergeElement(valuesRow, v));
+
   if (array.length <= 1) return;
 
+  // Split
   const { left, right } = mergeSort.divide(array);
 
-  const branchContainer = mergeSort.addDivElement(container, [
-    "element-merge-subparent"
-  ]);
+  // Children container
+  const childrenRow = mergeSort.addDivElement(node, ["merge-node-children"]);
 
-  mergeSort.createBranch({ left, right }, branchContainer);
-
-  visualizeDivide(left, branchContainer);
-  visualizeDivide(right, branchContainer);
+  // Recurse into child nodes
+  visualizeDivide(left, childrenRow);
+  visualizeDivide(right, childrenRow);
 };
+
+
+
+
 
 
 document.getElementById("start-sorting").addEventListener("click", startMergeSort);

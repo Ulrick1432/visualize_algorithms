@@ -7,11 +7,9 @@ export const mergeSort = {
    */
 
   divide: (array) => {
-    console.log("divide Start");
     const mid = Math.floor(array.length / 2);
     const left = array.slice(0, mid);
     const right = array.slice(mid);
-    console.log("divide result:", left, right);
     return { left, right };
   },
   /**
@@ -25,7 +23,6 @@ export const mergeSort = {
     element.classList.add("element-merge", `element-value-${value}`);
     element.textContent = value;
     container.appendChild(element);
-    console.log("Added merge element:", value);
   },
   /**
    * Adds an element to the DOM
@@ -49,17 +46,14 @@ export const mergeSort = {
    */
 
   createBranch: (dividedArr, container) => {
-    console.log("Creating branch in container:", container, "with dividedArr:", dividedArr);
-    const subparentChildDiv = mergeSort.addDivElement(container, ["element-split-subparent-child"]);
-    const leftContainer = mergeSort.addDivElement(subparentChildDiv, ["element-split-subparent-left"]);
-    const rightContainer = mergeSort.addDivElement(subparentChildDiv, ["element-split-subparent-right"]);
+    console.log("Opretter Child og left and right containers");
+    const leftContainer = mergeSort.addDivElement(container, ["element-split-subparent-left"]);
+    const rightContainer = mergeSort.addDivElement(container, ["element-split-subparent-right"]);
+
     if (dividedArr.left.length !== 0) {
       dividedArr.left.forEach(value => {
         mergeSort.addMergeElement(leftContainer, value);
       });
-    }
-    if (dividedArr.left.length !== 0 && dividedArr.right.length !== 0) {
-      //mergeSort.addDivElement(leftContainer, ["element-merge-subparent-separator",]);
     }
     if (dividedArr.right.length !== 0) {
       
@@ -67,7 +61,7 @@ export const mergeSort = {
         mergeSort.addMergeElement(rightContainer, value);
       });
     }
-    console.log("createBranch Return: ", {leftContainer, rightContainer});
+
     return {leftContainer, rightContainer};
   },
   /**
