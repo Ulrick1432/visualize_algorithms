@@ -18,8 +18,10 @@ const startMergeSort = async () => {
     // Add new elements to the DOM
     arr.forEach(value => mergeSort.addMergeElement(mainparent, value)); 
 
+    const mainSubparent = mergeSort.addDivElement(containerSplit, ["merge-sort-split-mainSubparent"]);
+
     // Start the merge sort visualization
-    visualizeDivide(arr, containerSplit);
+    visualizeDivide(arr, mainSubparent);
 
 
 

@@ -50,8 +50,9 @@ export const mergeSort = {
 
   createBranch: (dividedArr, container) => {
     console.log("Creating branch in container:", container, "with dividedArr:", dividedArr);
-    const leftContainer = mergeSort.addDivElement(container, ["element-split-subparent-left"]);
-    const rightContainer = mergeSort.addDivElement(container, ["element-split-subparent-right"]);
+    const subparentChildDiv = mergeSort.addDivElement(container, ["element-split-subparent-child"]);
+    const leftContainer = mergeSort.addDivElement(subparentChildDiv, ["element-split-subparent-left"]);
+    const rightContainer = mergeSort.addDivElement(subparentChildDiv, ["element-split-subparent-right"]);
     if (dividedArr.left.length !== 0) {
       dividedArr.left.forEach(value => {
         mergeSort.addMergeElement(leftContainer, value);

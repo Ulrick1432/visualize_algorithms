@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 .header {
   text-align: center;
 }
@@ -13,16 +16,18 @@ input#arraySize::-webkit-inner-spin-button {
 }
 
 .element-merge {
-  background-color: lightblue;
-  padding: 10px;
-  margin: 5px;
-  border-radius: 5px;
-  font-family: Arial, sans-serif;
-  color: darkblue;
-  text-align: center;
-  width: 100%;
-  transition: transform 0.5s;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background-color: #f2f2f2;
+  border: 2px solid #333;
+
+  font-weight: bold;
 }
+
 
 .container-merge-sort {
   text-align: center;
@@ -34,8 +39,12 @@ input#arraySize::-webkit-inner-spin-button {
 
 .merge-sort-split-mainparent {
   display: flex;
-  justify-content: space-evenly;
+  gap: 12px;
+  padding: 10px 16px;
+  border: 2px solid #444;
+  border-radius: 6px;
 }
+
 
 .element-merge-subparent-separator {
   border-left: 2px solid black;
@@ -46,12 +55,31 @@ input#arraySize::-webkit-inner-spin-button {
 
 .element-merge-subparent {
   display: flex;
-  align-items: center;
-}
-
-.element-split-subparent-left, .element-split-subparent-right {
-  display: flex;
+  flex-direction: column;
   justify-content: center;
-  width: 50%;
+  gap: 60px;
+  position: relative;
 }
 
+.element-split-subparent-child {
+  display: flex;
+}
+
+
+.element-split-subparent-left,
+.element-split-subparent-right {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  border: 1px dashed #999;
+  border-radius: 6px;
+  width: 100%;
+}
+
+
+.merge-sort-split {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
