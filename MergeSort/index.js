@@ -1,36 +1,47 @@
-const mergeSort = (startArray) => {
-  const length = startArray.length;
-  if (length === 1) {
-    return startArray;
+// Start mergesort
+import { helperFuncs } from "../helperFuncs.js";
+import { mergeSort } from "./mergeSort.js";
+
+const startMergeSort = async () => {
+  console.log("Start Merge Sort");
+  const input = document.getElementById("arraySize");
+  const size = parseInt(input.value); 
+  if (size >= 2 && size <= 10) {
+    const arr = helperFuncs.shuffleArray(helperFuncs.generateArray(size));
+    // Clear existing elements
+    const containerSplit = document.querySelector(".merge-sort-split");
+    containerSplit.innerHTML = '';
+    const containerMerge = document.querySelector(".merge-sort-merge");
+    containerMerge.innerHTML = '';
+
+    const mainparent = mergeSort.addDivElement(containerSplit, ["merge-sort-split-mainparent"]);
+    // Add new elements to the DOM
+    arr.forEach(value => mergeSort.addMergeElement(mainparent, value)); 
+
+    // Start the merge sort visualization
+    visualizeDivide(arr, containerSplit);
+
+
+
+  } else {
+    return alert("Please enter a number between 2 and 10.");
   }
-  
-  const mid = Math.floor(length / 2);
-  const leftArray = startArray.slice(0, mid);
-  const rightArray = startArray.slice(mid, length);
-
-  return merge(mergeSort(leftArray), mergeSort(rightArray))
-}
-
-const merge = (leftArray, rightArray) => {
-  const sortedArray = [];
-  while (leftArray.length > 0 && rightArray.length > 0) {
-    if (leftArray[0] < rightArray[0]) {
-      sortedArray.push(leftArray[0]);
-      leftArray.shift();
-    } else {
-      sortedArray.push(rightArray[0]);
-      rightArray.shift();
-    }
-  }
-  
-  return sortedArray.concat(leftArray).concat(rightArray);
-}
-
-
-const inputArr = [3, 5, 2, 90, 4, 7];
-
-console.log(mergeSort(inputArr));
-
-module.exports = {
-  mergeSort
 };
+
+const visualizeDivide = (array, container) => {
+  if (array.length <= 1) return;
+
+  const { left, right } = mergeSort.divide(array);
+
+  const branchContainer = mergeSort.addDivElement(container, [
+    "element-merge-subparent"
+  ]);
+
+  mergeSort.createBranch({ left, right }, branchContainer);
+
+  visualizeDivide(left, branchContainer);
+  visualizeDivide(right, branchContainer);
+};
+
+
+document.getElementById("start-sorting").addEventListener("click", startMergeSort);
